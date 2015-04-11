@@ -49,25 +49,6 @@
         }
     </script>
 
-<script type="text/javascript">
-	function getRepo() {
-    $.ajax({
-        type: "GET",
-        url: "https://api.github.com/users/ebsco/repos",
-        dataType: "json",
-        success: function(result) {
-            for( i in result ) {
-                $("#repo_list").append(
-                    "<li><a href='" + result[i].html_url + "' target='_blank'>" +
-                    result[i].name + "</a></li>"
-                );
-                console.log("i: " + i);
-            }
-            console.log(result);
-            $("#repo_count").append("Total Repos: " + result.length);
-        }
-    });
-});
 
  </script>
    <!-- <script type="text/javascript" src="//osscategories.prod.netflix.net/repos"></script> -->
@@ -120,10 +101,43 @@
 			<div class="repo-view"><a href="#" onclick="repoView(true);"><img src="assets/glyphicons_156_show_thumbnails.png" width="22" height="22" alt="Thumbnails" border="0"><span class="type">Thumbnail View</span></a>
 			<a href="#" onclick="repoView(false);"><img src="assets/glyphicons_114_list.png" width="22" height="22" alt="List" border="0"><span class="type">List View</span></a>
 
+<h1>My Github Repos</h1>
+<ul id="list"></ul>
+<script type="text/javascript">
 
+var $List = $('#list'),
+    sUser ='ebsco',
+    sUrl = 'https://api.github.com/users/' + sUser + '/repos?per_page=100' //@TODO: Once there are more than a hundred repos for a user this needs to be resolved by parsing the "Link" HTTP header send with the response
+;
 
+$.ajax({
+    dataType: "json",
+    url: sUrl,
+    success: function(p_oData, p_sStatus, p_oRequest){
+        $.each(p_oData, function(p_iIndex, p_oRepo){
+            var sHomepageLink='';
+            if(p_oRepo.fork === false){
+                if(p_oRepo.homepage){
+                    sRepoName = '<a href="' + p_oRepo.homepage + '" target="_blank">' + p_oRepo.name  + '</a> '
+                } else {
+                    sRepoName = '<a title="Click the Github icon to visit this repo" target="_blank">' + p_oRepo.name  + '</a> '
+                }                    
+                $List.append(
+                      '<li>' 
+                        + ' <a href="' + p_oRepo.html_url + '" class="icon icon-github" target="_blank"></a>'
+                        + sRepoName
+                        + '<span class="description">' + p_oRepo.description + '</span>'
+                    + '</li>'
+                );
+            }
+        });
+    },
+    error: function(p_oJqXHR, p_sStatus, p_sError){
+        $List.append('<li class="error">' + p_sError + ': ' + p_sStatus + '</li>');
+    }
+});
 
-window.onload = getRepo;
+</script>
 
 
 
