@@ -95,24 +95,7 @@
 		    <a href="https://github.com/Netflix"><h2>Our Repositories</h2></a>
 			<div class="repo-view"><a href="#" onclick="repoView(true);"><img src="assets/glyphicons_156_show_thumbnails.png" width="22" height="22" alt="Thumbnails" border="0"><span class="type">Thumbnail View</span></a>
 			<a href="#" onclick="repoView(false);"><img src="assets/glyphicons_114_list.png" width="22" height="22" alt="List" border="0"><span class="type">List View</span></a>
-			$("#btn_get_repos").click(function() {
-    $.ajax({
-        type: "GET",
-        url: "https://api.github.com/users/ebsco/repos",
-        dataType: "json",
-        success: function(result) {
-            for( i in result ) {
-                $("#repo_list").append(
-                    "<li><a href='" + result[i].html_url + "' target='_blank'>" +
-                    result[i].name + "</a></li>"
-                );
-                console.log("i: " + i);
-            }
-            console.log(result);
-            $("#repo_count").append("Total Repos: " + result.length);
-        }
-    });
-});
+	
 			</div>
 			<div id="repstats"></div>
 
