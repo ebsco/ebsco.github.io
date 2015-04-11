@@ -1,4 +1,4 @@
-$("#btn_get_repos").click(function() {
+function getRepo() {
     $.ajax({
         type: "GET",
         url: "https://api.github.com/users/ebsco/repos",
