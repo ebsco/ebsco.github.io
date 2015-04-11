@@ -10,7 +10,7 @@
     <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="js/jquery.dateFormat-1.0.js"></script>
     <script type="text/javascript" src="http://d3js.org/d3.v2.min.js"></script>
-    <script type="text/javascript" src="js/repos.js"></script>
+    
 
   
 
@@ -48,6 +48,28 @@
             categories = json.categories;
         }
     </script>
+
+script type="text/javascript">
+	function getRepo() {
+    $.ajax({
+        type: "GET",
+        url: "https://api.github.com/users/ebsco/repos",
+        dataType: "json",
+        success: function(result) {
+            for( i in result ) {
+                $("#repo_list").append(
+                    "<li><a href='" + result[i].html_url + "' target='_blank'>" +
+                    result[i].name + "</a></li>"
+                );
+                console.log("i: " + i);
+            }
+            console.log(result);
+            $("#repo_count").append("Total Repos: " + result.length);
+        }
+    });
+});
+
+ </script>
    <!-- <script type="text/javascript" src="//osscategories.prod.netflix.net/repos"></script> -->
     <!-- <script type="text/javascript" src="//osscategories.prod.netflix.net/categories"></script> -->
     <script type="text/javascript" src="js/models.js?v=201303071100"></script>
