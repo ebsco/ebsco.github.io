@@ -173,7 +173,7 @@ td a:hover
 .img-placeholder {
 	width: 350px;
 	height: 250px;
-	border: 1px solid #000;
+	border: 0px solid #000;
 	float: left;
 	margin-right: 30px;	
 }
